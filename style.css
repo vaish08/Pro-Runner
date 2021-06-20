@@ -1,0 +1,23 @@
+body{
+  //background-image: linear-gradient(to top bottom, #8FD9A8, #52734D);
+  background: -webkit-gradient(linear, left top, left bottom, from(#126E82) , to(#51C4D3)) fixed;
+  //: linear-gradient(to right #040404, #000000, #656565);
+}
+canvas {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:auto;
+  background-color: #B6C867;
+}
+
+p{
+  font-size: 100px;
+  margin-top: 30px;
+  padding-top: 10px;
+  color: white;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+}
