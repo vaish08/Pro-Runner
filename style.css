@@ -1,7 +1,5 @@
 body{
-  //background-image: linear-gradient(to top bottom, #8FD9A8, #52734D);
   background: -webkit-gradient(linear, left top, left bottom, from(#126E82) , to(#51C4D3)) fixed;
-  //: linear-gradient(to right #040404, #000000, #656565);
 }
 canvas {
   position: absolute;
@@ -13,11 +11,41 @@ canvas {
   background-color: #B6C867;
 }
 
-p{
+.heading{
   font-size: 100px;
   margin-top: 30px;
   padding-top: 10px;
   color: white;
   text-align: center;
   font-family: 'Orbitron', sans-serif;
+}
+
+.gameover{
+  top: 50%;
+  left: 48%;
+  position: absolute;
+  align-content: center;
+  display: none;
+}
+
+.text{
+  margin: 0;
+  font-family: 'Shadows Into Light';
+  font-size: 25px
+}
+
+.button{
+  border: none;
+  margin-top: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.img{
+  background-color: white;
+  width: 20px;
+  height: 20px;
 }

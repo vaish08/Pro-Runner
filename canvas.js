@@ -2,9 +2,8 @@ var mygamepiece, powerups=[];
 var myObstacles = [];
 var strokes = 0, if_clicked = false;
 var myScore, prev_score;
-var t = 15, temp = true;
-var n = 150;
-const img = document.getElementById('source');
+localStorage.highScore;
+var t = 12, temp = true;
 var x = 500;
 var y = 145;
 
@@ -12,7 +11,7 @@ var y = 145;
 function startgame(){
   mygamepiece = new component (30, 30, "#F0A500", x, y);
   background = new component(1000, 75, "#3EDBF0",0, 100);
-  myScore = new component("20px", "Consolas", "green", 890, 30, "text");
+  myScore = new component("20px", "Verdana", "green", 800, 30, "text");
   myGameArea.start();
 }
 
@@ -23,12 +22,15 @@ var myGameArea = {
     this.canvas.width = 1000;
     this.canvas.height = 275;
     this.context = this.canvas.getContext("2d");
-    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    document.body.insertBefore(this.canvas, document.body.childNodes[1]);
     this.frameNo = 0;
     this.interval = setInterval(updateGameArea, t);
-    console.log(t);
+
     window.addEventListener('keydown', function(e){
       myGameArea.key = e.keyCode;
+    });
+    window.addEventListener("click", function(){
+      myGameArea.key = 32;
     })
   },
   clear: function(){
@@ -39,12 +41,15 @@ var myGameArea = {
   }
 }
 
-document.addEventListener("keydown", function(){
+document.addEventListener("keydown", function(e){
   strokes++;
+  if(e.keyCode == 32){
+    var audio = new Audio("audio/mixkit-player-jumping-in-a-video-game-2043.wav");
+    audio.play();
+  }
 })
 
 document.addEventListener("click", function(){
-  if_clicked = true;
   strokes++;
 })
 
@@ -103,6 +108,9 @@ function updateGameArea(){
   var b, width, gap, minwidth, maxwidth, mingap, maxgap, next_gap;
   for(var i = 0; i < myObstacles.length; i++){
     if(mygamepiece.crashWith(myObstacles[i])){
+      highScoreUpdate();
+      var gameover = document.querySelectorAll(".gameover")[0];
+      gameover.style.display = "block";
       myGameArea.stop();
       return;
     }
@@ -112,6 +120,7 @@ function updateGameArea(){
 
   myGameArea.frameNo += 1;
 
+  //creates obstacles.
   if(myGameArea.frameNo == 1 || everinterval(150)){
     a = myGameArea.canvas.width;
     b = myGameArea.canvas.height;
@@ -128,44 +137,56 @@ function updateGameArea(){
     myObstacles.push(new component(width, 100, "#3EDBF0", a, 0));
     myObstacles.push(new component(width, 100, "#3EDBF0", a + gap, b - 100));
 
-    if(myGameArea.frameNo > 500){
-    var k = Math.floor(Math.random() * 100);
-    console.log(k);
-    if(k % 5 == 0){
-      powerups.push(new component(20, 20, "black", a+gap+width+20, b-120, true));
+    if(myGameArea.frameNo > 1000){
+    var k = Math.floor(Math.random() * 10);
+    if(k % 4 == 0){
+      powerups.push(new component(20, 20, "black", a+gap+width+35, b-120, true));
     }}
   }
+
 
   for(var i = 0; i < myObstacles.length; i++){
     myObstacles[i].x += -2;
     myObstacles[i].update();
   }
 
-  myScore.text = "SCORE:" + myGameArea.frameNo;
-  myScore.update();
 
+  score();
+
+  //powerups.
   for(var i = 0; i < powerups.length; i++){
     if(mygamepiece.crashWith(powerups[i])){
       powerups[i].type = false;
-      t = 20;
+      t = 30;
       temp = false;
       prev_score = myGameArea.frameNo;
     }
   }
-
   if(myGameArea.frameNo - prev_score > 500){
     temp = true;
   }
 
   accelaration();
-  clearInterval(myGameArea.interval);
-  myGameArea.interval = setInterval(updateGameArea, t);
   background.update();
   powerup();
   mygamepiece.newPos();
   mygamepiece.update();
 }
 
+//to update the score.
+function score(){
+  myScore.text = "SCORE: " + myGameArea.frameNo + "  " + localStorage.highScore;
+  myScore.update();
+}
+
+//localStorage for hight score
+function highScoreUpdate(){
+  if(myGameArea.frameNo > localStorage.highScore){
+    localStorage.highScore = myGameArea.frameNo;
+  }
+}
+
+//powerups: displaying in canvas
 function powerup(){
   for(var i = 0; i < powerups.length; i++){
     powerups[i].x += -2;
@@ -174,6 +195,7 @@ function powerup(){
   }
 }
 
+//updateGameArea - interval
 function accelaration(){
   mygamepiece.speedY = 0;
     if(y > 100 && myGameArea.key == 32 && strokes % 2 != 0){
@@ -194,4 +216,6 @@ function accelaration(){
         t = 5;
       }
     }
+    clearInterval(myGameArea.interval);
+    myGameArea.interval = setInterval(updateGameArea, t);
 }

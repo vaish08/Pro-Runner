@@ -4,15 +4,23 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <title></title>
 
   </head>
   <body onload="startgame()">
-        <p class="heading">
+        <h1 class="heading">
           Pro Runner
-        </p>
+        </h1>
       <canvas class="canvas"></canvas>
+      <div class="gameover">
+        <p class="text">GAME OVER</p>
+        <div class="button">
+          <input class="img" type="image" src="images/retry.png" onclick="location.reload()" value="">
+        </div>
+
+      </div>
+
       <script src="canvas.js" charset="utf-8"></script>
   </body>
 </html>
