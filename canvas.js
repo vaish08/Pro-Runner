@@ -6,12 +6,12 @@ localStorage.highScore;
 var t = 12, temp = true;
 var x = 500;
 var y = 145;
-
+var score = 0;
 
 function startgame(){
   mygamepiece = new component (30, 30, "#F0A500", x, y);
   background = new component(1000, 75, "#3EDBF0",0, 100);
-  myScore = new component("20px", "Verdana", "green", 800, 30, "text");
+  myScore = new component("20px", "Verdana", "green", 825, 30, "text");
   myGameArea.start();
 }
 
@@ -43,10 +43,6 @@ var myGameArea = {
 
 document.addEventListener("keydown", function(e){
   strokes++;
-  if(e.keyCode == 32){
-    var audio = new Audio("audio/mixkit-player-jumping-in-a-video-game-2043.wav");
-    audio.play();
-  }
 })
 
 document.addEventListener("click", function(){
@@ -137,9 +133,9 @@ function updateGameArea(){
     myObstacles.push(new component(width, 100, "#3EDBF0", a, 0));
     myObstacles.push(new component(width, 100, "#3EDBF0", a + gap, b - 100));
 
-    if(myGameArea.frameNo > 1000){
-    var k = Math.floor(Math.random() * 10);
-    if(k % 4 == 0){
+    if(myGameArea.frameNo > 700){
+    var k = Math.floor(Math.random() * 100);
+    if(k % 5 == 0){
       powerups.push(new component(20, 20, "black", a+gap+width+35, b-120, true));
     }}
   }
@@ -151,7 +147,7 @@ function updateGameArea(){
   }
 
 
-  score();
+  display();
 
   //powerups.
   for(var i = 0; i < powerups.length; i++){
@@ -174,15 +170,23 @@ function updateGameArea(){
 }
 
 //to update the score.
-function score(){
-  myScore.text = "SCORE: " + myGameArea.frameNo + "  " + localStorage.highScore;
+function display(){
+  if(localStorage.highScore == undefined){
+    localStorage.highScore = 0;
+  }
+  myScore.text = "SCORE: " + score + "  " + localStorage.highScore;
   myScore.update();
 }
 
+//update score
+setInterval(function scoreUpdate(){
+  score++;
+}, 500);
+
 //localStorage for hight score
 function highScoreUpdate(){
-  if(myGameArea.frameNo > localStorage.highScore){
-    localStorage.highScore = myGameArea.frameNo;
+  if(score > localStorage.highScore){
+    localStorage.highScore = score;
   }
 }
 
