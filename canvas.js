@@ -7,6 +7,10 @@ var t = 12, temp = true;
 var x = 500;
 var y = 145;
 var score = 0;
+var play = true, flag=  false;
+var array = [];
+var offsetX = document.getElementsByClassName('canvas')[0].offsetLeft;
+var offsetY = document.getElementsByClassName('canvas')[0].offsetTop;
 
 function startgame(){
   mygamepiece = new component (30, 30, "#F0A500", x, y);
@@ -42,11 +46,23 @@ var myGameArea = {
 }
 
 document.addEventListener("keydown", function(e){
+  if(play == true){
+    var audio = new Audio('audio/mixkit-player-jumping-in-a-video-game-2043.wav');
+    audio.play();
+  }
   strokes++;
 })
 
-document.addEventListener("click", function(){
-  strokes++;
+document.addEventListener("click", function(e){
+  if(e.pageY >= offsetY && e.pageY <= offsetY + 275 && e.pageX >= offsetX && e.pageX <= offsetX + 1000){
+  console.log(offsetY);
+  console.log(e.pageY);
+    if(play == true){
+      var audio = new Audio('audio/mixkit-player-jumping-in-a-video-game-2043.wav');
+      audio.play();
+    }
+    strokes++;
+  }
 })
 
 function everinterval(n){
@@ -105,11 +121,19 @@ function updateGameArea(){
   for(var i = 0; i < myObstacles.length; i++){
     if(mygamepiece.crashWith(myObstacles[i])){
       highScoreUpdate();
+      local_storage(score);
+      play = false;
       var gameover = document.querySelectorAll(".gameover")[0];
       gameover.style.display = "block";
       myGameArea.stop();
       return;
     }
+    // else{
+    //   if(myGameArea.key == 32){
+    //     var audio = new Audio('audio/mixkit-player-jumping-in-a-video-game-2043.wav');
+    //     audio.play();
+    //   }
+    // }
   }
 
   myGameArea.clear();
@@ -222,4 +246,57 @@ function accelaration(){
     }
     clearInterval(myGameArea.interval);
     myGameArea.interval = setInterval(updateGameArea, t);
+}
+
+//LeaderBoard button
+var modal1 = document.querySelectorAll(".modal")[0];
+var btn1 = document.querySelectorAll(".button3")[0];
+var span1 = document.querySelectorAll(".close")[0];
+btn1.onclick = function(){
+  modal1.style.display =  "block";
+}
+span1.onclick = function(){
+  modal1.style.display = "none";
+}
+
+//Instruction button.
+var modal = document.getElementsByClassName("modal")[1];
+var btn = document.getElementsByClassName("button2")[0];
+var span = document.getElementsByClassName("close")[1];
+btn.onclick = function(){
+  modal.style.display =  "block";
+}
+span.onclick = function(){
+  modal.style.display = "none";
+}
+
+print_moves(JSON.parse(localStorage.getItem("rank")));
+
+function local_storage(move){
+  var moves = !!localStorage.getItem('rank') ? JSON.parse(localStorage.getItem('rank')) : [];
+  for(var i = 0; i < moves.length; i++){
+    if(moves[i] == move){
+      flag = true;
+      break;
+    }
+  }
+  if(flag != true){
+    moves.push(move);
+    moves.sort(function(a, b){return b-a});
+    localStorage.setItem("rank", JSON.stringify(moves));
+  }
+}
+
+//print the array elements
+function print_moves(array){
+  var x = document.getElementById("list_items");
+
+  var ol = document.createElement('ol');
+
+  for(var i = 0; i < array.length; i++){
+    var li = document.createElement('li');
+    li.innerHTML = array[i];
+    ol.appendChild(li);
+  }
+  x.appendChild(ol);
 }

@@ -4,15 +4,44 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&&family=Montserrat&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <title>PRO-RUNNER</title>
     <link rel = "shortcut icon" type = "image/jpg" href = "favicon/runner.png" />
 
   </head>
   <body onload="startgame()">
         <h1 class="heading">
-          Pro Runner
+          PRO RUNNER
         </h1>
+        <button class="button3" type="button" name="button">LEADERBOARD</button>
+        <button class="button2" type="button" name="button">INSTRUCTIONS</button>
+        <div class="modal">
+          <div class="modal-content" id="list_items" style="width: 300px; background-color: #CDD0CB; position: relative; border: 5px solid black">
+          <span class="close">&times;</span>
+          <p class="score_heading">
+            Your top scores.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>INSTRUCTIONS !!!</h2>
+        <p>
+          1. Use space bar / mouse clicks to move the object up and down over the canvas.<br/>
+          2. Make sure the object stays on the green surface.
+          3. Highest score of all game is displayed on the top-right of the canvas. <br />
+          4. ⬛️ Black box acts are power-up which reduces the speed of the game. <br />
+          5. See your top scores in the leaderboard section. <br  />
+          <em style="line-height: 2"><b>Note:</b> Make sure to click within the canvas to move the object.</em>
+          <p style="line-height: 1.8">
+            Good Luck ! 🙂
+          </p>
+        </p>
+      </div>
+
+    </div>
       <canvas class="canvas"></canvas>
       <div class="gameover">
         <p class="text">GAME OVER</p>
@@ -23,5 +52,9 @@
       </div>
 
       <script src="canvas.js" charset="utf-8"></script>
+
+      <div class="bottom">
+        <p class="footer">Made with ♥️ VaishnaviB.</p>
+      </div>
   </body>
 </html>
