@@ -1,7 +1,10 @@
-PRO - RUNNER
-This is a simple Java Script game.
+**INSTRUCTIONS !!!**
+1. Use space bar / mouse clicks to move the object up and down over the canvas.
+2. Make sure the object stays on the green surface.
+3. Highest score of all game is displayed on the top-right of the canvas.
+4. ⬛️ Black box acts are power-up which reduces the speed of the game.
+5. See your top scores in the leaderboard section.
 
-INSTRUCTIONS:
-1. Use spacebar key / clicks to move the object up and down.
-2. ⬛️ acts as a powerup which makes the game to proceed slower.
-3. Your can see your current score and high score on top-right corner.
+_Note_: Make sure to click within the canvas to move the object.
+
+Good Luck !! 🙂
