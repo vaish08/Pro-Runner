@@ -199,6 +199,7 @@ function display(){
     localStorage.highScore = 0;
   }
   myScore.text = "SCORE: " + score + "  " + localStorage.highScore;
+  console.log(Math.max(...array));
   myScore.update();
 }
 
